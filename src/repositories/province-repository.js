@@ -1,10 +1,9 @@
 import pkg from 'pg'
-import Province from '../entities/province';
-import config from '../configs/db-config';
+import config from '../configs/db-config.js';
 const { Client, Pool } = pkg;
 
 const ProvinceRepository = () => {
-    getAllSync = async () => {
+    getAllAsync = async () => {
         let returnArray = null;
         const client = new Client(config);
 
