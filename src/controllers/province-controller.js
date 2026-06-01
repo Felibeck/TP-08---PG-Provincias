@@ -26,13 +26,29 @@ router.get('/:id', async (req, res) => {
     return respuesta;
 });
 
-router.post('/', async (req, res) => {
-    await svc.createAsync(req.body);
-    if (res.statusCode === 201) {
-        res.status(201).send("Provincia creada correctamente.");
-    } else {
-        res.status(400).send("Bad Request. Verifique los datos enviados.");
+router.post('', async (req, res) => {
+
+    let entity = req.body;
+    const created = await svc.createAsync(entity);
+    if (created) {
+        return res.status(201).send("Provincia creada correctamente.");
     }
+
+    return res.status(400).send("Bad Request. Verifique los datos enviados.");
+});
+
+router.put('/:id', async (req, res) => {
+    let entity = req.body;
+    entity.id = parseInt(req.params.id, 10);
+
+    const updated = await svc.updateAsync(entity);
+    if (updated) {
+        return res.status(200).send("Provincia actualizada correctamente.");
+    }
+    if (updated === -1) {
+        return res.status(404).send("Provincia no encontrada.");
+    }
+    return res.status(400).send("Bad Request. Verifique los datos enviados.");
 });
 
 export default router;
