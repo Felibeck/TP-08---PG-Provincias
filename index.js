@@ -14,7 +14,8 @@ app.use(express.json()); // Middleware para parsear y comprender JSON.
 // Endpoints (todos los Routers)
 app.use("/api/province", ProvinceRouter);
 
+
 // Inicio el Server y lo pongo a escuchar.
 app.listen(port, () => {
-    console.log(`https://localhost:${port}`);
+    console.log(`http://localhost:${port}`);
 });
