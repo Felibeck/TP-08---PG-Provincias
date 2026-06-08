@@ -4,7 +4,7 @@ const { Client } = pkg;
 
 class ProvinceRepository {
     async getAllAsync() {
-        let returnArray = null;
+        let returnArray = [];
         const client = new Client(config);
 
         try {
@@ -39,38 +39,50 @@ class ProvinceRepository {
 
 
 
-        async createAsync(entity) {
+    async createAsync(entity) {
         const client = new Client(config);
 
         try {
             await client.connect();
-        const sql = "INSERT INTO Provincias (nombre, full_name, latitude, longitude, display_order) VALUES ($1, $2, $3, $4, $5)";
-            await client.query(sql, [entity.nombre, entity.full_name, entity.latitude, entity.longitude, entity.display_order]);
-            await client.end();
-            return true;
+            const sql = "INSERT INTO Provincias (nombre, full_name, latitude, longitude, display_order) VALUES ($1, $2, $3, $4, $5)";
+            const result = await client.query(sql, [entity.nombre, entity.full_name, entity.latitude, entity.longitude, entity.display_order]);
+            return (result.rowCount > 0);
         } catch (error) {
             console.error(error);
             return false;
         }
     }
 
-     async updateAsync(entity) {
+    async updateAsync(entity) {
         const client = new Client(config);
 
         try {
             await client.connect();
-        const sql = "UPDATE Provincias SET nombre = $1, full_name = $2, latitude = $3, longitude = $4, display_order = $5 WHERE id = $6";
+            const sql = "UPDATE Provincias SET nombre = $1, full_name = $2, latitude = $3, longitude = $4, display_order = $5 WHERE id = $6";
             await client.query(sql, [entity.nombre, entity.full_name, entity.latitude, entity.longitude, entity.display_order, entity.id]);
             await client.end();
-            return true;
+            return (result.rowCount > 0);
         } catch (error) {
             console.error(error);
             return false;
         }
     }
 
+    async deleteAsync(id) {
 
-
+        const client = new Client(config);
+        try {
+            await client.connect();
+            const sql = "DELETE FROM Provincias WHERE id = $1";
+            await client.query(sql, [id]);
+            await client.end();
+            return true;
+        }
+        catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
 
 }
 

@@ -9,6 +9,9 @@ export default class ProvinceService {
     }
 
     getByIdAsync = async (id) => {
+        if (!id) {
+            return null;
+        }
         const repo = new ProvinceRepository();
         const returnArray = await repo.getByIdAsync(id);
         return returnArray;
@@ -68,5 +71,14 @@ export default class ProvinceService {
         }
 
         return await repo.updateAsync(entity);
+    }
+
+
+    async deleteAsync(id) {
+        if (!id) {
+            return false;
+        }
+        const repo = new ProvinceRepository();
+        return await repo.deleteAsync(id);
     }
 }
