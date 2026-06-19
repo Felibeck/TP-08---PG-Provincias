@@ -74,9 +74,9 @@ class ProvinceRepository {
         try {
             await client.connect();
             const sql = "DELETE FROM Provincias WHERE id = $1";
-            await client.query(sql, [id]);
+            const result = await client.query(sql, [id]);
             await client.end();
-            return true;
+            return (result.rowCount > 0);
         }
         catch (error) {
             console.error(error);
