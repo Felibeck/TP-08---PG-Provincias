@@ -59,7 +59,7 @@ class ProvinceRepository {
         try {
             await client.connect();
             const sql = "UPDATE Provincias SET nombre = $1, full_name = $2, latitude = $3, longitude = $4, display_order = $5 WHERE id = $6";
-            await client.query(sql, [entity.nombre, entity.full_name, entity.latitude, entity.longitude, entity.display_order, entity.id]);
+            const result = await client.query(sql, [entity.nombre, entity.full_name, entity.latitude, entity.longitude, entity.display_order, entity.id]);
             await client.end();
             return (result.rowCount > 0);
         } catch (error) {
